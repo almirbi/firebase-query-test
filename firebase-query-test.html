@@ -1,0 +1,74 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="bower_components/polymerfire/firebase-query.html">
+
+
+
+<dom-module id="firebase-query-test">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <firebase-app name="office-fifa" id="auth" api-key="AIzaSyBn5d2LVmrO2pU--oOy21t2UMke30k5sd0" auth-domain="office-fifa.firebaseapp.com"
+      storage-bucket="office-fifa.appspot.com" messaging-sender-id="248040235078" project-id="office-fifa" database-url="https://office-fifa.firebaseio.com/">
+    </firebase-app>
+    <firebase-query id="lol" app-name="office-fifa" order-by-child="status" path="/matchdays" equal-to="active" data="{{dataStatus}}"></firebase-query>
+    <firebase-query id="lol" app-name="office-fifa" order-by-child="isFinished" path="/matchdays" equal-to="true" data="{{dataIsFinished}}"></firebase-query>
+    <firebase-query id="lol2" app-name="office-fifa" path="/matchdays" data="{{dataUnfiltered}}"></firebase-query>
+
+    <h1>With equal-to string</h1>
+    <template is="dom-repeat" items="{{dataStatus}}" as="matchday">
+      [[matchday.status]]
+    </template>
+
+    <h1>With equal-to boolean</h1>
+    <template is="dom-repeat" items="{{dataIsFinished}}" as="matchday">
+      [[matchday.status]]
+    </template>
+
+    <h1>Without equal-to</h1>
+    <template is="dom-repeat" items="{{dataUnfiltered}}" as="matchday">
+      [[matchday.status]]
+    </template>
+
+  </template>
+
+  <script>
+    /**
+     * `firebase-query-test`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class FirebaseQueryTest extends Polymer.Element {
+      static get is() { return 'firebase-query-test'; }
+      static get properties() {
+        return {
+          properties: {
+            uid: String,
+            data: {
+              type: Object,
+              observer: 'dataChanged'
+            },
+            equalTo: {
+              type: String,
+              value: { status: 'active' }
+            }
+          },
+        };
+      }
+
+      dataChanged(newData, oldData) {
+        console.log("New data: ", newData);
+      }
+    }
+
+    window.customElements.define(FirebaseQueryTest.is, FirebaseQueryTest);
+  </script>
+</dom-module>
