@@ -1,52 +1,51 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>firebase-query-test test</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+  <title>firebase-query-test test</title>
 
-    <link rel="import" href="../firebase-query-test.html">
-  </head>
-  <body>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
 
-    <test-fixture id="BasicTestFixture">
-      <template>
-        <firebase-query-test></firebase-query-test>
-      </template>
-    </test-fixture>
+  <link rel="import" href="../firebase-query-test.html">
+</head>
 
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <firebase-query-test prop1="new-prop1"></firebase-query-test>
-      </template>
-    </test-fixture>
+<body>
 
-    <script>
-      suite('firebase-query-test', () => {
+  <test-fixture id="BasicTestFixture">
+    <template>
+      <firebase-query-test></firebase-query-test>
+    </template>
+  </test-fixture>
 
-        test('instantiating the element with default properties works', () => {
-          const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'firebase-query-test');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello firebase-query-test!');
-        });
+  <script>
 
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
+    // suite('equalTo query', function () {
+    //   var query;
 
-      });
-    </script>
+    //   setup(function () {
+    //     query = fixture('BasicQuery');
+    //     return query.transactionsComplete;
+    //   });
 
-  </body>
+    //   test('should allow an equalTo query with a `false` value', function () {
+    //     query.orderByChild = 'isFinished';
+    //     query.equalTo = false;
+    //     return setFirebaseValue(query.path, {
+    //       "L-X_sFo-THqlmcbfwxL": { isFinished: true },
+    //       "L-Y7G_b_1uO1pbLGu9g": { isFinished: false },
+    //       "L05GGzlPh72vAvAeg8s": { isFinished: false }
+    //     }).then(function () {
+    //       expect(query.data[0].$key).to.be.eql('L-Y7G_b_1uO1pbLGu9g');
+    //       expect(query.data.length).to.be.eql(2);
+    //     });
+    //   });
+    // });
+  </script>
+
+</body>
+
 </html>

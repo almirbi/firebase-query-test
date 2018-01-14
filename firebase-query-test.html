@@ -16,9 +16,9 @@
     <firebase-app name="office-fifa" id="auth" api-key="AIzaSyBn5d2LVmrO2pU--oOy21t2UMke30k5sd0" auth-domain="office-fifa.firebaseapp.com"
       storage-bucket="office-fifa.appspot.com" messaging-sender-id="248040235078" project-id="office-fifa" database-url="https://office-fifa.firebaseio.com/">
     </firebase-app>
-    <firebase-query id="lol" app-name="office-fifa" order-by-child="status" path="/matchdays" equal-to="active" data="{{dataStatus}}"></firebase-query>
-    <firebase-query id="lol" app-name="office-fifa" order-by-child="isFinished" path="/matchdays" equal-to="true" data="{{dataIsFinished}}"></firebase-query>
-    <firebase-query id="lol2" app-name="office-fifa" path="/matchdays" data="{{dataUnfiltered}}"></firebase-query>
+    <firebase-query app-name="office-fifa" order-by-child="status" path="/matchdays" equal-to="active" data="{{dataStatus}}"></firebase-query>
+    <firebase-query app-name="office-fifa" order-by-child="isFinished" path="/matchdays" equal-to="true" data="{{dataIsFinished}}"></firebase-query>
+    <firebase-query app-name="office-fifa" path="/matchdays" data="{{dataUnfiltered}}"></firebase-query>
 
     <h1>With equal-to string</h1>
     <template is="dom-repeat" items="{{dataStatus}}" as="matchday">
@@ -52,19 +52,31 @@
         return {
           properties: {
             uid: String,
-            data: {
+            dataStatus: {
+              type: Object,
+              observer: 'dataChanged'
+            },
+            dataIsFinished: {
+              type: Object,
+              observer: 'dataChanged'
+            },
+            dataUnfiltered: {
               type: Object,
               observer: 'dataChanged'
             },
             equalTo: {
               type: String,
-              value: { status: 'active' }
+              value: () => ['active']
             }
           },
         };
       }
 
-      dataChanged(newData, oldData) {
+      static get observers() {
+        return ['allDataAcquired(dataStatus, dataIsFinished, dataUnfiltered)'];
+      }
+
+      allDataAcquired(newData, oldData) {
         console.log("New data: ", newData);
       }
     }
